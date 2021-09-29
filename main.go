@@ -32,7 +32,7 @@ type ResourceGroups struct {
 	} `json:"value"`
 }
 
-// generic printer for access tokens
+// generic function for azure access tokens
 func AccessToken(t tokens.TokenRequester) string {
 	token, err := t.GetToken()
 	if err != nil {
@@ -41,7 +41,7 @@ func AccessToken(t tokens.TokenRequester) string {
 	return token.AccessToken
 }
 
-func RequestToken() string {
+func RequestRMToken() string {
 	// get credentials from environment variables
 	appid := os.Getenv("AZURE_CLIENT_ID")
 	tenantid := os.Getenv("AZURE_TENANT_ID")
@@ -62,21 +62,7 @@ func RequestToken() string {
 	return token
 }
 
-func main() {
-	// get azure resource manager token
-	token := RequestToken()
-
-	var rg ResourceGroup
-	urlrg := "https://management.azure.com/subscriptions/%v/resourcegroups?api-version=2019-10-01"
-	// list all application gateways in the specified Azure subscription
-	list := rg.List(urlrg, os.Getenv("AZURE_SUBSCRIPTION_ID"), token)
-	for _, l := range list.Value {
-		fmt.Println(l.Name)
-	}
-
-}
-
-func (r ResourceGroup) List(url, subscr, token string) ResourceGroups {
+func (r *ResourceGroup) List(url, subscr, token string) ResourceGroups {
 	requrl := fmt.Sprintf(url, subscr)
 	req, err := GetRequest(requrl, token)
 	if err != nil {
@@ -93,7 +79,6 @@ func (r ResourceGroup) List(url, subscr, token string) ResourceGroups {
 
 // GetRequest implements a function that sends a get request to a url
 func GetRequest(url string, token string) ([]byte, error) {
-
 	// Create a Bearer string by appending string access token
 	var bearer = "Bearer " + token
 	// Create a new request using http
@@ -124,4 +109,16 @@ func GetRequest(url string, token string) ([]byte, error) {
 
 }
 
-// AZURE RESOURCE STRUCTS
+func main() {
+	// get azure resource manager token
+	token := RequestRMToken()
+	// new resource group
+	var rg ResourceGroup
+	urlrg := "https://management.azure.com/subscriptions/%v/resourcegroups?api-version=2019-10-01"
+	// list all application gateways in the specified Azure subscription
+	list := rg.List(urlrg, os.Getenv("AZURE_SUBSCRIPTION_ID"), token)
+	for _, l := range list.Value {
+		fmt.Println(l.Name)
+	}
+
+}
