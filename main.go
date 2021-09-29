@@ -32,6 +32,21 @@ type ResourceGroups struct {
 	} `json:"value"`
 }
 
+func (r *ResourceGroup) List(url, subscr, token string) ResourceGroups {
+	requrl := fmt.Sprintf(url, subscr)
+	req, err := GetRequest(requrl, token)
+	if err != nil {
+		log.Println(err)
+	}
+
+	var val ResourceGroups
+	err = json.Unmarshal(req, &val)
+	if err != nil {
+		log.Println(err)
+	}
+	return val
+}
+
 // generic function for azure access tokens
 func AccessToken(t tokens.TokenRequester) string {
 	token, err := t.GetToken()
@@ -60,21 +75,6 @@ func RequestRMToken() string {
 
 	token := AccessToken(&rmclient)
 	return token
-}
-
-func (r *ResourceGroup) List(url, subscr, token string) ResourceGroups {
-	requrl := fmt.Sprintf(url, subscr)
-	req, err := GetRequest(requrl, token)
-	if err != nil {
-		log.Println(err)
-	}
-
-	var val ResourceGroups
-	err = json.Unmarshal(req, &val)
-	if err != nil {
-		log.Println(err)
-	}
-	return val
 }
 
 // GetRequest implements a function that sends a get request to a url
