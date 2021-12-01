@@ -1,5 +1,5 @@
 # azure-api-example
-Azure api example uses the github.com/bartvanbenthem/azuretoken package to authenticate to the API. when authorized all Resource Groups within the subscription will be printed.
+Azure api example uses the github.com/bartvanbenthem/azauth token package to authenticate to the API. when authorized all resource groups within the subscription will be printed.
 
 ## prerequisites
 Install azure cli: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
