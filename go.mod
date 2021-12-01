@@ -1,5 +1,5 @@
 module github.com/bartvanbenthem/azure-api-example
 
-go 1.14
+go 1.17
 
-require github.com/bartvanbenthem/azuretoken v0.0.0-20210929092311-4209c246ed74
+require github.com/bartvanbenthem/azauth v0.9.0 // indirect

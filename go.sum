@@ -1,3 +1,5 @@
+github.com/bartvanbenthem/azauth v0.9.0 h1:EKDCdItCJkm6wXpO3zOAcTHS37jooRF/6whMO4re6CI=
+github.com/bartvanbenthem/azauth v0.9.0/go.mod h1:hLV6pzc3o0g/di1InMO/miCjxgi7WRBcQSqBZdZWp9k=
 github.com/bartvanbenthem/azuretoken v0.0.0-20200722090124-3f2c337700e9 h1:ye9hNJE8wuEFdl4HmBFUNf6+/bUcOoqF+MGSpLRkk8U=
 github.com/bartvanbenthem/azuretoken v0.0.0-20200722090124-3f2c337700e9/go.mod h1:9zk8c/nqk9Glfz1x/Oek6TxrhHeqjlR8siuCbLS1h/s=
 github.com/bartvanbenthem/azuretoken v0.0.0-20210929092311-4209c246ed74 h1:HzzgED+gZYQL9sjivaafieG3OXoNAHrYUTOWfaOmo4M=

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/bartvanbenthem/azuretoken/pkg/tokens"
+	"github.com/bartvanbenthem/azauth/pkg/token"
 )
 
 type ResourceGroup struct {
@@ -48,7 +48,7 @@ func (r *ResourceGroup) List(url, subscr, token string) ResourceGroups {
 }
 
 // generic function for azure access tokens
-func AccessToken(t tokens.TokenRequester) string {
+func AccessToken(t token.Requester) string {
 	token, err := t.GetToken()
 	if err != nil {
 		log.Println(err)
@@ -62,15 +62,13 @@ func RequestRMToken() string {
 	tenantid := os.Getenv("AZURE_TENANT_ID")
 	secret := os.Getenv("AZURE_CLIENT_SECRET")
 
-	credentials := tokens.Credentials{
-		ApplicationID: appid,
-		TenantID:      tenantid,
-		ClientSecret:  secret,
-	}
-
 	// get azure resource manager api token
-	rmclient := tokens.RMClient{
-		Access: credentials,
+	rmclient := token.RMClient{
+		Auth: token.Credential{
+			ApplicationID: appid,
+			TenantID:      tenantid,
+			ClientSecret:  secret,
+		},
 	}
 
 	token := AccessToken(&rmclient)
